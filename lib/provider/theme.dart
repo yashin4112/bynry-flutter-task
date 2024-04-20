@@ -8,6 +8,7 @@ final themesProvider = NotifierProvider<ThemesProvider, ThemeMode>(() {
   return ThemesProvider();
 });
 
+
 class ThemesProvider extends Notifier<ThemeMode> {
 
   @override

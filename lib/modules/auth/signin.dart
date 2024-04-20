@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:todolist/modules/auth/provider.dart';
+import 'package:todolist/modules/base/view.dart';
 
 import '../../provider/theme.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'signup.dart';
 
-class AuthView extends ConsumerStatefulWidget {
-  const AuthView({super.key});
+class SignInView extends ConsumerStatefulWidget {
+  const SignInView({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _AuthViewState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _SignInViewState();
 }
 
-class _AuthViewState extends ConsumerState<AuthView> {
+class _SignInViewState extends ConsumerState<SignInView> {
   var isMobileEnabled = false;
 
   @override
@@ -30,11 +33,11 @@ class _AuthViewState extends ConsumerState<AuthView> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const Text(
-                      'Hello Again!',
+                      'Hello Again ! ',
                       style: TextStyle(
-                          fontFamily: 'TextaAltMedium',
-                          fontSize: 32,
-                          fontWeight: FontWeight.w700),
+                        fontSize: 32,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                     const SizedBox(
                       height: 8.0,
@@ -45,9 +48,9 @@ class _AuthViewState extends ConsumerState<AuthView> {
                         child: Text(
                           'Welcome back You\'ve \n       been missed!',
                           style: TextStyle(
-                              fontFamily: 'TextaAltMedium',
-                              fontSize: 28,
-                              fontWeight: FontWeight.w200),
+                            fontSize: 28,
+                            fontWeight: FontWeight.w200,
+                          ),
                         ),
                       ),
                     ),
@@ -59,27 +62,27 @@ class _AuthViewState extends ConsumerState<AuthView> {
                       decoration: BoxDecoration(
                         // boxShadow: boxShadow(),
                         // color: const Color.fromARGB(255, 38, 42, 47),
-                        color: ref.watch(themesProvider) == ThemeMode.dark ? const Color.fromARGB(255, 38, 42, 47) : const Color(0xFFEFEEEE),
-
+                        color: ref.watch(themesProvider) == ThemeMode.dark
+                            ? const Color.fromARGB(255, 38, 42, 47)
+                            : const Color(0xFFEFEEEE),
+        
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                       child: TextFormField(
-                        // controller: text.
+                        controller: ref.read(loginProvider).emailController,
                         style: const TextStyle(
                             fontFamily: 'TextaAltMedium',
                             fontSize: 16,
                             fontWeight: FontWeight.w200),
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.all(8.0),
-                          hintText: (isMobileEnabled)
-                              ? "Mobile Number"
-                              : " Email ID",
-                          hintStyle: const TextStyle(
+                        decoration: const InputDecoration(
+                            contentPadding: EdgeInsets.all(8.0),
+                            hintText: " Email ID",
+                            hintStyle: TextStyle(
                               fontFamily: 'TextaAltMedium',
                               fontSize: 16,
-                              fontWeight: FontWeight.w200),
-                          border: InputBorder.none
-                        ),
+                              fontWeight: FontWeight.w200,
+                            ),
+                            border: InputBorder.none),
                       ),
                     ),
                     const SizedBox(
@@ -88,14 +91,13 @@ class _AuthViewState extends ConsumerState<AuthView> {
                     Container(
                       padding: const EdgeInsets.all(8.0),
                       decoration: BoxDecoration(
-                        // boxShadow: boxShadow(),
-                        // color: const Color.fromARGB(255, 38, 42, 47),
-                        color: ref.watch(themesProvider) == ThemeMode.dark ? const Color.fromARGB(255, 38, 42, 47) : const Color(0xFFEFEEEE),
-
+                        color: ref.watch(themesProvider) == ThemeMode.dark
+                            ? const Color.fromARGB(255, 38, 42, 47)
+                            : const Color(0xFFEFEEEE),
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                       child: TextFormField(
-                        // controller: text.
+                        controller: ref.read(loginProvider).passwordController,
                         style: const TextStyle(
                             fontFamily: 'TextaAltMedium',
                             fontSize: 16,
@@ -111,20 +113,22 @@ class _AuthViewState extends ConsumerState<AuthView> {
                       ),
                     ),
                     const SizedBox(
-                      height: 16.0,
+                      height: 16,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Spacer(),
+                        const Spacer(),
                         TextButton(
-                          onPressed: () => setState(
-                              () => isMobileEnabled = !isMobileEnabled),
-                          child: Text(
-                            (isMobileEnabled)
-                                ? 'Login With Email'
-                                : 'Login With Mobile',
-                            style: const TextStyle(
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => const SignUpView()
+                              )
+                            );  
+                          },
+                          child: const Text(
+                            'Dont\'t have an Account Create Here',
+                            style: TextStyle(
                                 fontFamily: 'TextaAltMedium',
                                 fontSize: 16,
                                 fontWeight: FontWeight.w200),
@@ -134,13 +138,17 @@ class _AuthViewState extends ConsumerState<AuthView> {
                     ),
                     Center(
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          ref.read(loginProvider).loginUser;
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context)=> BaseView()));
+                        },
                         child: const Text(
-                          "Login",
+                          'Login',
                           style: TextStyle(
-                              fontFamily: 'TextaAltMedium',
-                              fontSize: 16,
-                              fontWeight: FontWeight.w200),
+                            fontFamily: 'TextaAltMedium',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w200
+                          ),
                         ),
                       ),
                     ),
@@ -196,10 +204,12 @@ class _AuthViewState extends ConsumerState<AuthView> {
                           padding: const EdgeInsets.all(5.0),
                           decoration: BoxDecoration(
                             // color: const Color.fromARGB(
-                            //     255, 44, 48, 53), 
+                            //     255, 44, 48, 53),
                             ////: const Color(0xFFEFEEEE),
-                            color: ref.watch(themesProvider) == ThemeMode.dark ? const Color.fromARGB(255, 38, 42, 47) : const Color(0xFFEFEEEE),
-
+                            color: ref.watch(themesProvider) == ThemeMode.dark
+                                ? const Color.fromARGB(255, 38, 42, 47)
+                                : const Color(0xFFEFEEEE),
+        
                             borderRadius: BorderRadius.circular(12.0),
                           ),
                           height: 45,
@@ -214,8 +224,10 @@ class _AuthViewState extends ConsumerState<AuthView> {
                           decoration: BoxDecoration(
                             // color: const Color.fromARGB(
                             //     255, 44, 48, 53), // : const Color(0xFFEFEEEE),
-                            color: ref.watch(themesProvider) == ThemeMode.dark ? const Color.fromARGB(255, 38, 42, 47) : const Color(0xFFEFEEEE),
-
+                            color: ref.watch(themesProvider) == ThemeMode.dark
+                                ? const Color.fromARGB(255, 38, 42, 47)
+                                : const Color(0xFFEFEEEE),
+        
                             borderRadius: BorderRadius.circular(12.0),
                           ),
                           height: 45,
@@ -236,51 +248,50 @@ class _AuthViewState extends ConsumerState<AuthView> {
       ),
     );
   }
-}
 
   List<BoxShadow> boxShadow() {
-    // if (ref.watch(themesProvider) == ThemeMode.dark) {
-    return [
-      BoxShadow(
-        color: Color.fromARGB(255, 255, 255, 255).withOpacity(0.1),
-        offset: const Offset(-5.5, -5.5),
-        blurRadius: 8.0,
-      ),
-      BoxShadow(
-        color: Colors.black.withOpacity(0.6),
-        offset: const Offset(6.0, 6.0),
-        blurRadius: 6.0,
-      ),
-    ];
-    // }
-    // else{
-    //   return [
-    //     BoxShadow(
-    //       color: Colors.white.withOpacity(0.9),
-    //       offset: const Offset(-7.0, -7.0),
-    //       blurRadius: 15.0,
-    //     ),
-    //     BoxShadow(
-    //       color: Colors.black.withOpacity(0.25),
-    //       offset: const Offset(7.0, 7.0),
-    //       blurRadius: 12.0,
-    //     ),
-    //   ];
-    // }
+    if (ref.watch(themesProvider) == ThemeMode.dark) {
+      return [
+        BoxShadow(
+          color: Color.fromARGB(255, 255, 255, 255).withOpacity(0.1),
+          offset: const Offset(-5.5, -5.5),
+          blurRadius: 8.0,
+        ),
+        BoxShadow(
+          color: Colors.black.withOpacity(0.6),
+          offset: const Offset(6.0, 6.0),
+          blurRadius: 6.0,
+        ),
+      ];
+    } else {
+      return [
+        BoxShadow(
+          color: Colors.white.withOpacity(0.9),
+          offset: const Offset(-7.0, -7.0),
+          blurRadius: 15.0,
+        ),
+        BoxShadow(
+          color: Colors.black.withOpacity(0.25),
+          offset: const Offset(7.0, 7.0),
+          blurRadius: 12.0,
+        ),
+      ];
+    }
   }
 
   List<Color> setGradient() {
-    // if (ref.watch(themesProvider) == ThemeMode.dark) {
-    return const [
-      Color.fromARGB(255, 65, 71, 81),
-      Color.fromARGB(255, 49, 53, 59),
-      Color.fromARGB(255, 34, 37, 40),
-    ];
-    //   } else {
-    //     return [
-    //       Colors.white,
-    //       const Color.fromARGB(255, 223, 219, 219),
-    //       const Color.fromARGB(255, 183, 182, 182),
-    //     ];
-    //   }
+    if (ref.watch(themesProvider) == ThemeMode.dark) {
+      return const [
+        Color.fromARGB(255, 65, 71, 81),
+        Color.fromARGB(255, 49, 53, 59),
+        Color.fromARGB(255, 34, 37, 40),
+      ];
+    } else {
+      return [
+        Colors.white,
+        const Color.fromARGB(255, 223, 219, 219),
+        const Color.fromARGB(255, 183, 182, 182),
+      ];
+    }
   }
+}

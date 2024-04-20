@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:todolist/modules/profile/ui.dart';
 
-import '../auth/ui.dart';
+import '../auth/signup.dart';
 import '../home/ui.dart';
 
 class BaseView extends StatefulWidget {
@@ -18,10 +19,10 @@ class _BaseViewState extends State<BaseView> {
       body: IndexedStack(
         index: index,
         children: [
-          HomeView(),
+          const HomeView(),
           Container(),
           Container(),
-          AuthView(),
+          const ProfileView(),
         ],
       ),
       bottomNavigationBar: NavigationBar(
@@ -52,21 +53,21 @@ class _BaseViewState extends State<BaseView> {
           ),
           NavigationDestination(
             icon: Icon(
-              Icons.person_outlined,
-            ),
-            selectedIcon: Icon(
-              Icons.person,
-            ),
-            label: 'Profile',
-          ),
-          NavigationDestination(
-            icon: Icon(
               Icons.support_agent_outlined,
             ),
             selectedIcon: Icon(
               Icons.support_agent,
             ),
             label: 'Support',
+          ),
+          NavigationDestination(
+            icon: Icon(
+              Icons.person_outlined,
+            ),
+            selectedIcon: Icon(
+              Icons.person,
+            ),
+            label: 'Profile',
           ),
         ],
       ),

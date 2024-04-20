@@ -41,7 +41,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
         leading: const Icon(Icons.home_outlined),
         actions: [
           IconButton(
-            icon: const Icon(Icons.shopping_cart_outlined),
+            icon: ref.watch(themesProvider) == ThemeMode.dark ? const Icon(Icons.light_mode_outlined) : const Icon(Icons.dark_mode_outlined),
             onPressed: () {
               // Navigator.of(context).push(MaterialPageRoute(builder: (context) => CartView()));
               ref.watch(themesProvider) == ThemeMode.dark
@@ -73,8 +73,8 @@ class _HomeViewState extends ConsumerState<HomeView> {
                   boxShadow: boxShadow(),
                   color: ref.watch(themesProvider) == ThemeMode.dark
                       ? const Color.fromARGB(255, 38, 42, 47)
-                      : const Color.fromARGB(255, 232, 232, 232),
-                  // color: const Color.fromARGB(255, 232, 232, 232),
+                      : Color.fromARGB(255, 241, 240, 240),
+                  // color: const Color.fromARGB(255, 241, 240, 240),
                   borderRadius: BorderRadius.circular(20.0),
                 ),
                 child: Column(
@@ -131,10 +131,10 @@ class _HomeViewState extends ConsumerState<HomeView> {
                 width: double.infinity,
                 decoration: BoxDecoration(
                   // color: const Color.fromARGB(220, 241, 241, 242),
-                  //color: const Color.fromARGB(255, 232, 232, 232),
+                  //color: const Color.fromARGB(255, 241, 240, 240),
                   color: ref.watch(themesProvider) == ThemeMode.dark
                       ? const Color.fromARGB(255, 38, 42, 47)
-                      : const Color.fromARGB(255, 232, 232, 232),
+                      : const Color.fromARGB(255, 241, 240, 240),
                   boxShadow: boxShadow(),
                   borderRadius: BorderRadius.circular(15.0),
                 ),
@@ -288,7 +288,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
                     boxShadow: boxShadow(),
                     color: ref.watch(themesProvider) == ThemeMode.dark
                         ? const Color.fromARGB(255, 38, 42, 47)
-                        : const Color.fromARGB(255, 232, 232, 232),
+                        : const Color.fromARGB(255, 241, 240, 240),
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                   child: ListTile(
@@ -401,15 +401,15 @@ class _HomeViewState extends ConsumerState<HomeView> {
   }
 
   List<BoxShadow> boxShadow() {
-    if (ThemeMode == ThemeMode.light) {
+    if (ThemeMode == ThemeMode.dark) {
       return [
         BoxShadow(
           color: Colors.white.withOpacity(0.14),
           offset: const Offset(-2.5, -2.5),
-          blurRadius: 10.0,
+          blurRadius: 8.0,
         ),
         BoxShadow(
-          color: Colors.black.withOpacity(0.6),
+          color: Colors.black.withOpacity(0.45),
           offset: const Offset(6.0, 6.0),
           blurRadius: 8.0,
         ),

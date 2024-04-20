@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:todolist/modules/auth/signup.dart';
+import 'package:todolist/provider/login.dart';
 
+import 'modules/auth/provider.dart';
 import 'modules/base/view.dart';
 import 'provider/database.dart';
 import 'provider/theme.dart';
@@ -35,7 +38,21 @@ class MyApp extends ConsumerWidget {
           textTheme: Typography().white.apply(fontFamily: 'TextaAltMedium'),         
         ),
         themeMode: ref.watch(themesProvider),
-      home: const BaseView(),
+      home: showWidget(ref),
     );
+  }
+  Widget showWidget(WidgetRef ref) {
+    try {
+      var state = ref.read(databaseProvider).getPref('loginState');
+      if (state) {
+        return const BaseView();
+      } else {
+        return const SignUpView();
+      }
+    } catch (e) {
+      return const SignUpView();
+    }
+    
+
   }
 }
