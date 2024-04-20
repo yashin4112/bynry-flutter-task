@@ -2,10 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'modules/base/view.dart';
+import 'provider/database.dart';
+import 'provider/theme.dart';
 
 
-void main() {
-  runApp(const MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await DatabaseProvider().initiateDatabase();
+
+  
+  runApp(
+    const ProviderScope(
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends ConsumerWidget {
@@ -19,11 +29,12 @@ class MyApp extends ConsumerWidget {
       ).copyWith(
           textTheme: Typography().black.apply(fontFamily: 'TextaAltMedium'),         
         ),
-      // darkTheme: ThemeData.dark(
-      //   useMaterial3: true,
-      // ).copyWith(
-      //     textTheme: Typography().white.apply(fontFamily: 'TextaAltMedium'),         
-      //   ),
+        darkTheme: ThemeData.dark(  
+          useMaterial3: true,
+        ).copyWith(
+          textTheme: Typography().white.apply(fontFamily: 'TextaAltMedium'),         
+        ),
+        themeMode: ref.watch(themesProvider),
       home: const BaseView(),
     );
   }

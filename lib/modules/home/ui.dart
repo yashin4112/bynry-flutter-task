@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:todolist/widgets/image_view_widget.dart';
 
+import '../../provider/theme.dart';
 import '../../widgets/gridviewwidget.dart';
 
 class HomeView extends ConsumerStatefulWidget {
@@ -18,6 +19,12 @@ class _HomeViewState extends ConsumerState<HomeView> {
   final formatter = DateFormat('d MMM y');
   final gasId = 'SA1234567';
   var dropdownValue = 'thismonth';
+  DateTime date = DateTime.now();
+  var gasFee = {
+    'thismonth': 48,
+    'lastmonth': 60,
+    'last3month': 130,
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +44,13 @@ class _HomeViewState extends ConsumerState<HomeView> {
             icon: const Icon(Icons.shopping_cart_outlined),
             onPressed: () {
               // Navigator.of(context).push(MaterialPageRoute(builder: (context) => CartView()));
+              ref.watch(themesProvider) == ThemeMode.dark
+                  ? ref
+                      .read(themesProvider.notifier)
+                      .changeTheme(ThemeMode.light)
+                  : ref
+                      .read(themesProvider.notifier)
+                      .changeTheme(ThemeMode.dark);
             },
           ),
           const SizedBox(
@@ -57,9 +71,10 @@ class _HomeViewState extends ConsumerState<HomeView> {
                 padding: const EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
                   boxShadow: boxShadow(),
-                  // color: ref.watch(themesProvider) == ThemeMode.dark
-                  // ? const Color.fromARGB(255, 38, 42, 47)
-                  color: const Color.fromARGB(255, 232, 232, 232),
+                  color: ref.watch(themesProvider) == ThemeMode.dark
+                      ? const Color.fromARGB(255, 38, 42, 47)
+                      : const Color.fromARGB(255, 232, 232, 232),
+                  // color: const Color.fromARGB(255, 232, 232, 232),
                   borderRadius: BorderRadius.circular(20.0),
                 ),
                 child: Column(
@@ -106,15 +121,8 @@ class _HomeViewState extends ConsumerState<HomeView> {
                       ),
                     ]),
               ),
-              // const SizedBox(height: 35,),
-              const SizedBox(
-                height: 24,
-              ),
               const SizedBox(
                 height: 30,
-              ),
-              const SizedBox(
-                height: 24,
               ),
               Container(
                 padding: const EdgeInsets.all(8.0),
@@ -123,7 +131,10 @@ class _HomeViewState extends ConsumerState<HomeView> {
                 width: double.infinity,
                 decoration: BoxDecoration(
                   // color: const Color.fromARGB(220, 241, 241, 242),
-                  color: const Color.fromARGB(255, 232, 232, 232),
+                  //color: const Color.fromARGB(255, 232, 232, 232),
+                  color: ref.watch(themesProvider) == ThemeMode.dark
+                      ? const Color.fromARGB(255, 38, 42, 47)
+                      : const Color.fromARGB(255, 232, 232, 232),
                   boxShadow: boxShadow(),
                   borderRadius: BorderRadius.circular(15.0),
                 ),
@@ -189,7 +200,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
                 ),
               ),
               const SizedBox(
-                height: 48,
+                height: 40,
               ),
               Row(
                 children: [
@@ -216,34 +227,68 @@ class _HomeViewState extends ConsumerState<HomeView> {
                     ),
                   ),
                   const Spacer(),
-                  DropdownButtonFormField(
-                    value: dropdownValue,
-                    items: const [
-                      DropdownMenuItem(
-                        value: 'thismonth',
-                        child: Text('This Month'),
+                  Container(
+                    height: 35,
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.black,
+                        width: 1.0,
                       ),
-                      DropdownMenuItem(
-                        value: 'lastmonth',
-                        child: Text('Last Month'),
-                      ),
-                    ], 
-                    onChanged: (value){
-                      setState(() {
-                        dropdownValue = value.toString();
-                      });
-                    }
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                    child: DropdownButtonHideUnderline(
+                        child: DropdownButton(
+                      value: dropdownValue,
+                      items: const [
+                        DropdownMenuItem(
+                          value: 'thismonth',
+                          child: Text('This Month'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'lastmonth',
+                          child: Text('Last Month'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'last3month',
+                          child: Text('Last 3 Months'),
+                        ),
+                      ],
+                      onChanged: (value) {
+                        setState(() {
+                          dropdownValue = value ?? 'thismonth';
+                        });
+                        if (dropdownValue == 'thismonth') {
+                          setState(() {
+                            date = DateTime.now();
+                          });
+                        } else if (dropdownValue == 'lastmonth') {
+                          setState(() {
+                            date = DateTime.now()
+                                .subtract(const Duration(days: 30));
+                          });
+                        } else if (dropdownValue == 'last3month') {
+                          setState(() {
+                            date = DateTime.now()
+                                .subtract(const Duration(days: 90));
+                          });
+                        }
+                      },
+                    )),
                   )
                 ],
-                
+              ),
+              const SizedBox(
+                height: 30,
               ),
               Container(
                   padding: const EdgeInsets.all(8.0),
                   decoration: BoxDecoration(
                     boxShadow: boxShadow(),
-                    // color: ref.watch(themesProvider) == ThemeMode.dark
-                    //     ? const Color.fromARGB(255, 38, 42, 47)
-                    color: const Color.fromARGB(255, 232, 232, 232),
+                    color: ref.watch(themesProvider) == ThemeMode.dark
+                        ? const Color.fromARGB(255, 38, 42, 47)
+                        : const Color.fromARGB(255, 232, 232, 232),
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                   child: ListTile(
@@ -255,11 +300,11 @@ class _HomeViewState extends ConsumerState<HomeView> {
                       ),
                     ),
                     subtitle: Text(
-                      "${formatter.format(DateTime.now())}",
+                      formatter.format(date),
                     ),
-                    trailing: const Text(
-                      '48\$',
-                      style: TextStyle(fontSize: 24),
+                    trailing: Text(
+                      '${gasFee[dropdownValue]}\$',
+                      style: const TextStyle(fontSize: 24),
                     ),
                   )
                   // isProfessional == ref.watch(isPremium)
@@ -356,34 +401,32 @@ class _HomeViewState extends ConsumerState<HomeView> {
   }
 
   List<BoxShadow> boxShadow() {
-    // if (ThemeMode == ThemeMode.light)
-    {
-      // return [
-      //   BoxShadow(
-      //     color: Colors.white.withOpacity(0.14),
-      //     offset: const Offset(-2.5, -2.5),
-      //     blurRadius: 10.0,
-      //   ),
-      //   BoxShadow(
-      //     color: Colors.black.withOpacity(0.6),
-      //     offset: const Offset(6.0, 6.0),
-      //     blurRadius: 8.0,
-      //   ),
-      // ];
+    if (ThemeMode == ThemeMode.light) {
+      return [
+        BoxShadow(
+          color: Colors.white.withOpacity(0.14),
+          offset: const Offset(-2.5, -2.5),
+          blurRadius: 10.0,
+        ),
+        BoxShadow(
+          color: Colors.black.withOpacity(0.6),
+          offset: const Offset(6.0, 6.0),
+          blurRadius: 8.0,
+        ),
+      ];
+    } else {
+      return [
+        BoxShadow(
+          color: Colors.white.withOpacity(0.14),
+          offset: const Offset(-2.5, -2.5),
+          blurRadius: 10.0,
+        ),
+        BoxShadow(
+          color: Colors.black.withOpacity(0.6),
+          offset: const Offset(6.0, 6.0),
+          blurRadius: 8.0,
+        ),
+      ];
     }
-    //   else {
-    return [
-      BoxShadow(
-        color: Colors.white.withOpacity(0.8),
-        offset: Offset(-6.0, -6.0),
-        blurRadius: 16.0,
-      ),
-      BoxShadow(
-        color: Colors.black.withOpacity(0.15),
-        offset: Offset(4.0, 4.0),
-        blurRadius: 12.0,
-      ),
-    ];
-    //   }
   }
 }
