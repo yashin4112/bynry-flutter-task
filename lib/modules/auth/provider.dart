@@ -54,6 +54,9 @@ class LoginProvider {
   }
 
   void registerUser() async {
+    print(emailController.text);
+    print(passwordController.text);
+    print(nameController.text);
       var res = await ref.read(apiProvider).authRoute.register(email: emailController.text, password: passwordController.text, name: nameController.text);
       ref.read(isOtpSentProvider.notifier).state = true;
       Fluttertoast.showToast(msg: 'OTP sent to your email');

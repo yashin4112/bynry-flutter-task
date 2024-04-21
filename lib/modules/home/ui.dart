@@ -71,9 +71,8 @@ class _HomeViewState extends ConsumerState<HomeView> {
                 padding: const EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
                   boxShadow: boxShadow(),
-                  color: ref.watch(themesProvider) == ThemeMode.dark
-                      ? const Color.fromARGB(255, 38, 42, 47)
-                      : Color.fromARGB(255, 241, 240, 240),
+                  color: ref.watch(themesProvider) == ThemeMode.light
+                      ? Color.fromARGB(255, 241, 240, 240) : const Color.fromARGB(255, 38, 42, 47),
                   // color: const Color.fromARGB(255, 241, 240, 240),
                   borderRadius: BorderRadius.circular(20.0),
                 ),
@@ -132,9 +131,8 @@ class _HomeViewState extends ConsumerState<HomeView> {
                 decoration: BoxDecoration(
                   // color: const Color.fromARGB(220, 241, 241, 242),
                   //color: const Color.fromARGB(255, 241, 240, 240),
-                  color: ref.watch(themesProvider) == ThemeMode.dark
-                      ? const Color.fromARGB(255, 38, 42, 47)
-                      : const Color.fromARGB(255, 241, 240, 240),
+                  color: ref.watch(themesProvider) == ThemeMode.light
+                      ? Color.fromARGB(255, 241, 240, 240) : const Color.fromARGB(255, 38, 42, 47),
                   boxShadow: boxShadow(),
                   borderRadius: BorderRadius.circular(15.0),
                 ),
@@ -286,9 +284,9 @@ class _HomeViewState extends ConsumerState<HomeView> {
                   padding: const EdgeInsets.all(8.0),
                   decoration: BoxDecoration(
                     boxShadow: boxShadow(),
-                    color: ref.watch(themesProvider) == ThemeMode.dark
-                        ? const Color.fromARGB(255, 38, 42, 47)
-                        : const Color.fromARGB(255, 241, 240, 240),
+                    color: ref.watch(themesProvider) == ThemeMode.light
+                        ?  const Color.fromARGB(255, 241, 240, 240)
+                        :const Color.fromARGB(255, 38, 42, 47),
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                   child: ListTile(

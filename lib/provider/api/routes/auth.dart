@@ -7,6 +7,7 @@ class AuthRoute {
 
   Future<Response<dynamic>> register({String? email, String? password, String? name}) async {
     try {
+      print(dio.options.baseUrl);
       var data = <String, dynamic>{};
       if(email != '') data['email'] = email;
       if(password != '') data['password'] = password;
@@ -16,12 +17,15 @@ class AuthRoute {
         data: data,
       );
     } catch (e) {
+      print(e);  
       rethrow;
     }
   }
 
   Future<Response<dynamic>> verifyOTP({String? email, required int otp}) async {
     try {
+      print(dio.options.baseUrl);
+
       var data = <String, dynamic>{};
       if(email != '') data['email'] = email;
       data['otp'] = otp;
