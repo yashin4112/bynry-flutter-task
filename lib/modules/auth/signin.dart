@@ -62,10 +62,9 @@ class _SignInViewState extends ConsumerState<SignInView> {
                       decoration: BoxDecoration(
                         // boxShadow: boxShadow(),
                         // color: const Color.fromARGB(255, 38, 42, 47),
-                        color: ref.watch(themesProvider) == ThemeMode.dark
-                            ? const Color.fromARGB(255, 38, 42, 47)
-                            : const Color(0xFFEFEEEE),
-        
+                        color: ref.watch(themesProvider) == ThemeMode.light
+                            ? const Color(0xFFEFEEEE) 
+                            : const Color.fromARGB(255, 38, 42, 47), 
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                       child: TextFormField(
@@ -92,8 +91,7 @@ class _SignInViewState extends ConsumerState<SignInView> {
                       padding: const EdgeInsets.all(8.0),
                       decoration: BoxDecoration(
                         color: ref.watch(themesProvider) == ThemeMode.dark
-                            ? const Color.fromARGB(255, 38, 42, 47)
-                            : const Color(0xFFEFEEEE),
+                            ? const Color(0xFFEFEEEE) : const Color.fromARGB(255, 38, 42, 47),
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                       child: TextFormField(
