@@ -204,9 +204,8 @@ class _SignInViewState extends ConsumerState<SignInView> {
                             // color: const Color.fromARGB(
                             //     255, 44, 48, 53),
                             ////: const Color(0xFFEFEEEE),
-                            color: ref.watch(themesProvider) == ThemeMode.dark
-                                ? const Color.fromARGB(255, 38, 42, 47)
-                                : const Color(0xFFEFEEEE),
+                            color: ref.watch(themesProvider) == ThemeMode.light
+                                ? const Color(0xFFEFEEEE) : const Color.fromARGB(255, 38, 42, 47),
         
                             borderRadius: BorderRadius.circular(12.0),
                           ),
@@ -222,9 +221,8 @@ class _SignInViewState extends ConsumerState<SignInView> {
                           decoration: BoxDecoration(
                             // color: const Color.fromARGB(
                             //     255, 44, 48, 53), // : const Color(0xFFEFEEEE),
-                            color: ref.watch(themesProvider) == ThemeMode.dark
-                                ? const Color.fromARGB(255, 38, 42, 47)
-                                : const Color(0xFFEFEEEE),
+                            color: ref.watch(themesProvider) == ThemeMode.light
+                                ? const Color(0xFFEFEEEE) : const Color.fromARGB(255, 38, 42, 47),
         
                             borderRadius: BorderRadius.circular(12.0),
                           ),
